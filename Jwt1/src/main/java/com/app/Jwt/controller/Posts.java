@@ -24,20 +24,30 @@ public class Posts {
 
 
     int batchSize = 100;
-    int totalObjects =1000;
+    int totalObjects = 1000;
+
     @GetMapping("/savePost")
-    public String  savePosts() {
+    public String savePosts() {
         com.app.Jwt.model.Posts posts;
         List<com.app.Jwt.model.Posts> postsList = new ArrayList<>();
-        for(int i=1; i<=10000;i++){
+        for (int i = 1; i <= 100000; i++) {
             posts = new com.app.Jwt.model.Posts();
-            posts.setTitle("title"+i);
+            posts.setTitle("title" + i);
             postsList.add(posts);
-            
+
             //postsRepository.save(posts);
         }
         postsRepository.saveAll(postsList);
         return "Success";
 
     }
+
+
+    @GetMapping("/getPost")
+    public List<com.app.Jwt.model.Posts> getPost() {
+        List<com.app.Jwt.model.Posts> postsList = (List<com.app.Jwt.model.Posts>) postsRepository.findAll();
+        return postsList;
+    }
+
+
 }
